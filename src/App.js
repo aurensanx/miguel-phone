@@ -5,46 +5,44 @@ import { Teclado } from './componentes/Teclado'
 import { Pantalla } from './componentes/Pantalla'
 import { Acciones } from './componentes/Acciones'
 
+const textMap = {
+  calling: 'Llamando...',
+  ended: 'Llamada finalizada...'
+}
+
 function App () {
   const [numeroTelefono, setNumeroTelefono] = useState('')
-  const [textoLlamada, setTextoLlamada] = useState('')
-  const [llamarActivo, setLLamarActivo] = useState(false)
-  const [colgarActivo, setColgarActivo] = useState(false)
-  const addNumero = (e) => {
-    if (e === 'Borrar') {
+  const [phoneState, setPhoneState] = useState('')
+
+  const addNumero = tecla => {
+    if (tecla === 'Borrar') {
       setNumeroTelefono('')
     } else {
       if (numeroTelefono.length === 8) {
-        setLLamarActivo(true)
+        setPhoneState('canCall')
       } else {
-        setLLamarActivo(false)
-        setNumeroTelefono(numeroTelefono + e)
+        setNumeroTelefono(numeroTelefono + tecla)
       }
     }
   }
   const llamar = (e) => {
     e.preventDefault()
-    if (llamarActivo) {
-      setTextoLlamada('Llamando...')
-      setLLamarActivo(false)
-      setColgarActivo(true)
-    }
+    setPhoneState('calling')
   }
+
   const colgar = (e) => {
     e.preventDefault()
-    if (colgarActivo) {
-      setTextoLlamada('Llamada finalizada...')
-      setLLamarActivo(false)
-      setColgarActivo(false)
+    if (phoneState === 'calling') {
+      setPhoneState('ended')
       setNumeroTelefono('')
     }
   }
   return (
     <div className="contenedor">
-      <Pantalla dato={textoLlamada} tipo="mensaje"></Pantalla>
+      <Pantalla dato={textMap[phoneState]} tipo="mensaje"/>
       <main className="telefono">
-      <Teclado accion={addNumero}></Teclado>
-      <Acciones numeroTelefono={numeroTelefono} llamarActivo={llamarActivo} colgarActivo={colgarActivo} llamar={llamar} colgar={colgar}></Acciones>
+      <Teclado accion={addNumero}/>
+      <Acciones numeroTelefono={numeroTelefono} llamarActivo={phoneState === 'canCall'} colgarActivo={phoneState === 'calling'} llamar={llamar} colgar={colgar}/>
       </main>
     </div>
   )

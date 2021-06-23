@@ -1,13 +1,10 @@
 import React from 'react'
 
-export const Boton = (props) => {
-  const { children, accion, tipoBoton } = props
-  return (
-    <button
-      onClick={accion}
-      className={tipoBoton}
-    >
-      {children}
-    </button>
-  )
-}
+export const Boton = ({ children, accion, tipoBoton }) => (
+  <button
+    onClick={accion}
+    className={tipoBoton}
+  >
+    {children}
+  </button>
+)
