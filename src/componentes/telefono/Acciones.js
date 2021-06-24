@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pantalla } from './Pantalla'
+import { Pantalla } from '../commons/Pantalla'
 import { BotonAccion } from './BotonAccion'
 
 export const Acciones = ({ numeroTelefono, llamarActivo, colgarActivo, llamar, colgar }) => (
