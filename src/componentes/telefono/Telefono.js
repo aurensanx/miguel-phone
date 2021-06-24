@@ -14,7 +14,7 @@ export const Telefono = ({ phoneState, setPhoneState }) => {
   }
 
   useEffect(() => {
-    setPhoneState(numeroTelefono.length === 9 ? 'canCall' : '')
+    setPhoneState(prevState => numeroTelefono.length === 9 ? 'canCall' : numeroTelefono.length === 0 ? prevState : '')
   }, [numeroTelefono.length])
 
   const llamar = e => {
